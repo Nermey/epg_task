@@ -1,0 +1,21 @@
+services:
+  database:
+    container_name: database
+    restart: always
+    image: postgres:15.2
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: database
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    ports:
+      - ${DATABASE_PORT}:${DATABASE_PORT}
+    expose:
+      - ${DATABASE_PORT}
+    command:
+      - "postgres"
+      - "-c"
+      - "port=${DATABASE_PORT}"
